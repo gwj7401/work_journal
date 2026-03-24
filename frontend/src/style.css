@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #0f1117;
+  color: #e0e0e0;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* Element Plus 深色覆盖 */
+.el-button--primary { background: #409eff; border-color: #409eff; }
+.el-input__wrapper { background: rgba(255,255,255,0.06) !important; box-shadow: 0 0 0 1px rgba(255,255,255,0.1) !important; }
+.el-input__inner { color: #fff !important; }
+.el-date-picker { --el-bg-color: #1a1f36; }
