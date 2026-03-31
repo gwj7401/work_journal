@@ -5,6 +5,7 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from fastapi import Request
 from sqlalchemy.orm import Session
 from database import get_db
 from config import get_settings
@@ -12,7 +13,25 @@ from models.user import User
 
 settings = get_settings()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+
+class OAuth2PasswordBearerWithQuery(OAuth2PasswordBearer):
+    def __init__(self, tokenUrl: str):
+        super().__init__(tokenUrl=tokenUrl, auto_error=False)
+
+    async def __call__(self, request: Request) -> Optional[str]:
+        res = await super().__call__(request)
+        if res:
+            return res
+        token = request.query_params.get("token")
+        if not token:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Not authenticated",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        return token
+
+oauth2_scheme = OAuth2PasswordBearerWithQuery(tokenUrl="/api/auth/login")
 
 
 def verify_password(plain: str, hashed: str) -> bool:

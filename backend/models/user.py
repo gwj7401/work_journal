@@ -15,5 +15,6 @@ class User(Base):
     dept = Column(String(50), nullable=True, comment="所属部门")
     is_active = Column(Boolean, default=True, comment="是否启用")
     is_admin = Column(Boolean, default=False, comment="是否管理员")
+    theme = Column(String(30), default="indigo", comment="用户界面主题偏好")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

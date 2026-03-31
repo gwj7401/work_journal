@@ -22,8 +22,10 @@ class Settings(BaseSettings):
 
     @property
     def database_url(self) -> str:
+        from urllib.parse import quote_plus
+        pwd = quote_plus(self.db_password)   # 转义 @ & 等特殊字符
         return (
-            f"mysql+pymysql://{self.db_user}:{self.db_password}"
+            f"mysql+pymysql://{self.db_user}:{pwd}"
             f"@{self.db_host}:{self.db_port}/{self.db_name}"
             f"?charset=utf8mb4"
         )

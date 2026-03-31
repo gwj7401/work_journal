@@ -31,9 +31,10 @@
       <MdEditor
         v-model="content"
         :toolbars="toolbars"
-        theme="dark"
+        :theme="auth.editorTheme"
         preview-theme="github"
         language="zh-CN"
+        @on-upload-img="onUploadImg"
         style="height: calc(100vh - 200px);"
       />
     </div>
@@ -47,7 +48,9 @@ import 'md-editor-v3/lib/style.css'
 import dayjs from 'dayjs'
 import api from '@/api'
 import { ElMessage } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
 const today = dayjs().format('YYYY年MM月DD日 dddd')
 const content = ref('')
 const tags = ref([])
@@ -56,10 +59,10 @@ const saving = ref(false)
 const entryId = ref(null)
 
 const toolbars = [
-  'bold', 'italic', 'strikethrough', '-',
-  'unorderedList', 'orderedList', 'task', '-',
-  'code', 'table', '-',
-  'revoke', 'next', 'save'
+  'bold', 'underline', 'italic', 'strikethrough', 'quote', '-',
+  'title', 'unorderedList', 'orderedList', 'task', '-',
+  'link', 'image', 'table', 'codeRow', 'code', '-',
+  'revoke', 'next', 'save', 'pageFullscreen', 'preview', 'htmlPreview'
 ]
 
 onMounted(async () => {
@@ -100,19 +103,45 @@ async function save() {
     saving.value = false
   }
 }
+
+const onUploadImg = async (files, callback) => {
+  const uploadTasks = files.map(file => {
+    return new Promise((resolve, reject) => {
+      const form = new FormData()
+      form.append('file', file)
+      api.post('/upload/image', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then(res => {
+        resolve(res.data.url)
+      }).catch(err => {
+        ElMessage.error(`图片 ${file.name} 上传失败`)
+        reject(err)
+      })
+    })
+  })
+
+  Promise.all(uploadTasks).then((urls) => {
+    callback(urls)
+  })
+}
 </script>
 
 <style scoped>
-.today-view { height: 100%; }
+.today-view { height: 100%; animation: fadeIn 0.5s ease-out; }
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
-.page-header h2 { color: #fff; margin: 0 0 4px; font-size: 20px; }
-.page-date { color: rgba(255,255,255,0.4); margin: 0; font-size: 13px; }
-.header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.page-header h2 { color: var(--text-primary); margin: 0 0 4px; font-size: 24px; font-weight: 700; }
+.page-date { color: var(--text-secondary); margin: 0; font-size: 14px; opacity: 0.8; }
+.header-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
 .tag-item { cursor: default; }
-.editor-wrap { border-radius: 12px; overflow: hidden; }
+.editor-wrap { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.1); border: 1px solid var(--border-color); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>

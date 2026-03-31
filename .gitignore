@@ -49,3 +49,20 @@ logs/
 
 # 上传文件
 uploads/
+
+# 文档和日志
+/docs/*
+!/docs/模板/
+/docs/模板/2024年事业单位工作人员年度考核登记表_郭卫江.docx
+/docs/模板/郭卫江一季度-事业单位工作人员平时考核登记表.doc
+/docs/模板/郭卫江一季度-事业单位工作人员平时考核登记表.docx
+!/docs/模板/季度总结模板.docx
+!/docs/模板/月度总结模板.docx
+!/docs/模板/月度提示词.txt
+!/docs/*-dev-log.md
+!/docs/2026-03-monthly-summary.md
+
+# 其他
+.skills/
+backend/tmp_*.png
+tmp_SCAN_PAGE.png

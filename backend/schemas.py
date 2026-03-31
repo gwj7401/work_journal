@@ -25,6 +25,23 @@ class UserOut(BaseModel):
     email: Optional[str]
     dept: Optional[str]
     is_admin: bool
+    theme: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class SummaryHistoryOut(BaseModel):
+    id: int
+    user_id: int
+    summary_type: str
+    summary_id: int
+    year: int
+    month: Optional[int] = None
+    quarter: Optional[int] = None
+    content: Optional[str]
+    version_note: Optional[str]
     created_at: datetime
 
     class Config:
@@ -70,6 +87,7 @@ class SummaryGenerate(BaseModel):
 
 class SummaryUpdate(BaseModel):
     edited_content: str
+    is_final: Optional[bool] = None
 
 
 class SummaryOut(BaseModel):
@@ -79,6 +97,7 @@ class SummaryOut(BaseModel):
     month: int
     ai_content: Optional[str]
     edited_content: Optional[str]
+    is_final: bool = False
     generated_at: datetime
 
     class Config:
@@ -106,6 +125,7 @@ class QuarterlySummaryGenerate(BaseModel):
 
 class QuarterlySummaryUpdate(BaseModel):
     edited_content: str
+    is_final: Optional[bool] = None
 
 
 class QuarterlySummaryOut(BaseModel):
@@ -115,6 +135,7 @@ class QuarterlySummaryOut(BaseModel):
     quarter: int
     ai_content: Optional[str]
     edited_content: Optional[str]
+    is_final: bool = False
     generated_at: datetime
 
     class Config:
@@ -128,6 +149,7 @@ class AnnualSummaryGenerate(BaseModel):
 
 class AnnualSummaryUpdate(BaseModel):
     edited_content: str
+    is_final: Optional[bool] = None
 
 
 class AnnualSummaryOut(BaseModel):
@@ -136,6 +158,7 @@ class AnnualSummaryOut(BaseModel):
     year: int
     ai_content: Optional[str]
     edited_content: Optional[str]
+    is_final: bool = False
     generated_at: datetime
 
     class Config:

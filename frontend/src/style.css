@@ -1,3 +1,83 @@
+:root, [data-theme="indigo"] {
+  --bg-color-main: #0B0E14;
+  --bg-color-gradient: linear-gradient(135deg, #0B0E14 0%, #1A1F35 100%);
+  --sidebar-bg: rgba(22, 27, 46, 0.4);
+  --sidebar-blur: blur(20px);
+  --sidebar-text-main: #ffffff;
+  --sidebar-text-item: rgba(255, 255, 255, 0.5);
+  --sidebar-text-active: #ffffff;
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --input-bg: rgba(255, 255, 255, 0.04);
+  --input-focus-bg: rgba(255, 255, 255, 0.08);
+  --scroll-thumb: rgba(255, 255, 255, 0.15);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.25);
+  --date-picker-bg: #1a1f36;
+}
+
+[data-theme="light"] {
+  --bg-color-main: #f8fafc;
+  --bg-color-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --sidebar-bg: rgba(255, 255, 255, 0.6);
+  --sidebar-blur: blur(24px);
+  --sidebar-text-main: #0f172a;
+  --sidebar-text-item: #64748b;
+  --sidebar-text-active: #3b82f6;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-focus-bg: rgba(255, 255, 255, 1);
+  --scroll-thumb: rgba(0, 0, 0, 0.15);
+  --scroll-thumb-hover: rgba(0, 0, 0, 0.25);
+  --date-picker-bg: #ffffff;
+}
+
+[data-theme="deep"] {
+  --bg-color-main: #000000;
+  --bg-color-gradient: linear-gradient(to bottom right, #000000, #111111);
+  --sidebar-bg: rgba(10, 10, 10, 0.7);
+  --sidebar-blur: blur(15px);
+  --sidebar-text-main: #ffffff;
+  --sidebar-text-item: rgba(255, 255, 255, 0.6);
+  --sidebar-text-active: #ffffff;
+  --primary-color: #ec4899;
+  --primary-hover: #db2777;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255, 255, 255, 0.03);
+  --input-focus-bg: rgba(255, 255, 255, 0.06);
+  --scroll-thumb: rgba(255, 255, 255, 0.1);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.2);
+  --date-picker-bg: #111111;
+}
+
+[data-theme="sepia"] {
+  --bg-color-main: #fcf8e3;
+  --bg-color-gradient: linear-gradient(135deg, #fcf8e3 0%, #ecdabb 100%);
+  --sidebar-bg: rgba(240, 226, 196, 0.5);
+  --sidebar-blur: blur(15px);
+  --sidebar-text-main: #451a03;
+  --sidebar-text-item: #92400e;
+  --sidebar-text-active: #d97706;
+  --primary-color: #d97706;
+  --primary-hover: #b45309;
+  --text-primary: #451a03;
+  --text-secondary: #92400e;
+  --border-color: rgba(69, 26, 3, 0.1);
+  --input-bg: rgba(255, 255, 255, 0.4);
+  --input-focus-bg: rgba(255, 255, 255, 0.7);
+  --scroll-thumb: rgba(69, 26, 3, 0.2);
+  --scroll-thumb-hover: rgba(69, 26, 3, 0.3);
+  --date-picker-bg: #fef9c3;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,19 +85,39 @@
 }
 
 body {
-  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  background: #0f1117;
-  color: #e0e0e0;
+  font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-color-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scroll-thumb-hover); }
 
-/* Element Plus 深色覆盖 */
-.el-button--primary { background: #409eff; border-color: #409eff; }
-.el-input__wrapper { background: rgba(255,255,255,0.06) !important; box-shadow: 0 0 0 1px rgba(255,255,255,0.1) !important; }
-.el-input__inner { color: #fff !important; }
-.el-date-picker { --el-bg-color: #1a1f36; }
+/* Element Plus 覆盖 */
+.el-button--primary { 
+  background: var(--primary-color) !important; 
+  border-color: var(--primary-color) !important; 
+  transition: all 0.3s ease;
+}
+.el-button--primary:hover {
+  background: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--primary-color);
+}
+.el-input__wrapper { 
+  background: var(--input-bg) !important; 
+  box-shadow: 0 0 0 1px var(--border-color) !important; 
+  transition: all 0.3s ease;
+}
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--primary-color) !important;
+  background: var(--input-focus-bg) !important;
+}
+.el-input__inner { color: var(--text-primary) !important; }
+.el-date-picker { --el-bg-color: var(--date-picker-bg); }

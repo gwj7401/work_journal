@@ -33,5 +33,24 @@ export const useAuthStore = defineStore('auth', () => {
     return res.data
   }
 
-  return { token, user, isLoggedIn, login, logout, register }
+  const theme = computed(() => user.value?.theme || 'indigo')
+  const editorTheme = computed(() => {
+    const t = theme.value
+    return (t === 'indigo' || t === 'deep') ? 'dark' : 'light'
+  })
+
+  function setTheme(newTheme) {
+    if (user.value) {
+      user.value.theme = newTheme
+      localStorage.setItem('wj_user', JSON.stringify(user.value))
+      document.documentElement.setAttribute('data-theme', newTheme)
+      api.put('/api/auth/theme?theme=' + newTheme) // 使用之前修复过的正确路径
+    }
+  }
+
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', theme.value)
+  }
+
+  return { token, user, isLoggedIn, theme, editorTheme, login, logout, register, setTheme, applyTheme }
 })

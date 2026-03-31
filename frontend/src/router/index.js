@@ -45,6 +45,12 @@ const routes = [
         name: 'Stats',
         component: () => import('@/views/StatsView.vue'),
         meta: { title: '统计' }
+      },
+      {
+        path: 'tools',
+        name: 'Tools',
+        component: () => import('@/views/ToolsView.vue'),
+        meta: { title: '实用小工具' }
       }
     ]
   }

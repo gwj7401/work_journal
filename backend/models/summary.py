@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sqlalchemy import Column, Integer, Text, SmallInteger, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Text, SmallInteger, DateTime, ForeignKey, Boolean
 from sqlalchemy.sql import func
 from database import Base
 
@@ -13,5 +13,6 @@ class MonthlySummary(Base):
     month = Column(SmallInteger, nullable=False, comment="月份")
     ai_content = Column(Text, nullable=True, comment="AI生成的总结原文")
     edited_content = Column(Text, nullable=True, comment="用户编辑后的版本")
+    is_final = Column(Boolean, default=False, comment="是否正式定稿不再被AI生成覆盖")
     generated_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
