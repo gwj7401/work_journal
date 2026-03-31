@@ -60,7 +60,7 @@ uploads/
 !/docs/模板/月度总结模板.docx
 !/docs/模板/月度提示词.txt
 !/docs/*-dev-log.md
-!/docs/2026-03-monthly-summary.md
+/docs/2026-03-monthly-summary.md
 
 # 其他
 .skills/
